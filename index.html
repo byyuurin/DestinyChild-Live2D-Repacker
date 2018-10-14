@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Live2D</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body>
+    <h1>Live2D</h1>
+    <div id="app">
+        <h2>必要參數</h2>
+        <p>
+            <label>素材圖數量<input type="number" name="textures" v-model="textures"></label>
+        </p>
+        <p>
+            <label>pck檔名<input type="text" name="vid" v-model.trim="vid"></label>
+            {{vidInfo}}
+        </p>
+        <div class="raw-input" v-show="!isOutput">
+            <h2>參照檔</h2>
+            <textarea v-model="dbRawData"></textarea>
+        </div>
+        <div class="output-content" v-if="isOutput">
+            <hr>
+            file: <strong>{{vid}}.{{settings.main.extension}}</strong>
+            <hr>
+            <textarea v-if="outputContent">{{outputContent}}</textarea>
+        </div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js'></script>
+    <script src="./script/script.js"></script>
+    <script>
+    </script>
+</body>
+
+</html>

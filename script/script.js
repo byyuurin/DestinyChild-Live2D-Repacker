@@ -96,7 +96,6 @@
         // textures
         for (let i = 0; i < this.textures; i++) {
           numberText = this.numberToText(i, 2)
-          console.log(numberText)
           data.textures.push(`texture_${numberText}.png`)
         }
 
@@ -143,6 +142,13 @@
         return data
       }
     },
+    watch: {
+      dbRawData() {
+        if (typeof Storage !== undefined) {
+          localStorage.setItem('rawData', this.dbRawData)
+        }
+      }
+    },
     methods: {
       numberToText(number, minLength = 1) {
         let text = String(number)
@@ -160,6 +166,12 @@
       },
       motionFileName(name, subName, extension) {
         return `${name}_${subName}.${extension}`
+      }
+    },
+    created() {
+      if (typeof Storage !== undefined) {
+        rawData = localStorage.getItem('rawData')
+        this.dbRawData = rawData || ''
       }
     }
   })

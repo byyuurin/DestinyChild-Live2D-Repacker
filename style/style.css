@@ -1,5 +1,11 @@
+h1 {
+  color: #3333cc;
+}
+
 #app input {
   text-align: center;
+  border: none;
+  margin-left: 1em;
 }
 
 #app textarea {
@@ -12,4 +18,39 @@
   height: 100%;
   display: block;
   min-height: 300px;
+}
+
+#app code:after {
+  content: ', ';
+}
+
+#app code:last-child::after {
+  content: '';
+}
+
+#app code {
+  border: 1px solid #222222 inset;
+  color: #c66;
+  font-weight: 800;
+  font-size: larger;
+}
+
+#app .vid-matches {
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+#app .vid-matches .match {
+  color: green;
+  font-weight: 800;
+}
+
+#app .output-content > ol > li {
+  padding: 10px 5px;
+}
+
+#app .output-content > ol > li > ul,
+#app .output-content > ol > li > textarea {
+  margin-top: 10px;
 }

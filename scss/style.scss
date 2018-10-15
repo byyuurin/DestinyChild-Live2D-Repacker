@@ -1,6 +1,11 @@
+h1 {
+  color: #3333cc;
+}
 #app {
   input {
     text-align: center;
+    border: none;
+    margin-left: 1em;
   }
   textarea {
     position: relative;
@@ -12,5 +17,37 @@
     height: 100%;
     display: block;
     min-height: 300px;
+  }
+  code:after {
+    content: ', ';
+  }
+  code:last-child::after {
+    content: '';
+  }
+  code {
+    border: 1px solid #222222 inset;
+    color: #c66;
+    font-weight: 800;
+    font-size: larger;
+  }
+  .vid-matches {
+    max-height: 300px;
+    overflow: hidden;
+    overflow-y: scroll;
+    .match {
+      color: green;
+      font-weight: 800;
+    }
+  }
+  .output-content {
+    > ol {
+      > li {
+        padding: 10px 5px;
+        > ul,
+        > textarea {
+          margin-top: 10px;
+        }
+      }
+    }
   }
 }

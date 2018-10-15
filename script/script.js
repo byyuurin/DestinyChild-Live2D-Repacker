@@ -2,6 +2,7 @@
   let vm = new Vue({
     el: '#app',
     data: {
+      editRawData: false,
       textures: 1,
       vid: '',
       settings: {
@@ -65,11 +66,9 @@
       vidInfo() {
         if (!this.vid) return ''
 
-        return this.vidMatches
-          .map(data => {
-            return `${data.name}(${data.vid})`
-          })
-          .join(',')
+        return this.vidMatches.map(data => {
+          return { vid: data.vid, name: data.name }
+        })
       },
       isOutput() {
         return (
@@ -87,7 +86,8 @@
           motions: {
             tap: [],
             idle: []
-          }
+          },
+          physics: ''
         }
 
         // model

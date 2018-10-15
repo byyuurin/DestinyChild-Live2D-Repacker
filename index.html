@@ -5,30 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Live2D</title>
+    <title>Destiny Child Live2D for OvOy</title>
     <link rel="stylesheet" href="./style/style.css">
 </head>
 
 <body>
-    <h1>Live2D</h1>
+    <h1>Destiny Child Live2D for OvOy</h1>
     <div id="app">
+        <h2>On/Off</h2>
+        <hr>
+        <input type="checkbox" id="editRawData" v-model="editRawData">
+        <label for="editRawData">修改參照檔</label>
+        <hr>
         <h2>必要參數</h2>
         <p>
-            <label>素材圖數量<input type="number" name="textures" v-model="textures"></label>
+            <label>素材圖數量<input type="number" name="textures" maxlength="2" v-model="textures"></label>
         </p>
         <p>
-            <label>pck檔名<input type="text" name="vid" v-model.trim="vid"></label>
-            {{vidInfo}}
+            <div style="display:inline;">
+                <label>pck檔名<input type="text" name="vid" maxlength="7" v-model.trim="vid"></label>
+                <div class="vid-matches" v-show="vidInfo.length > 0">
+                    <ul>
+                        <li v-for="info in vidInfo" :class="{match:(vidInfo.length===1)}" @click="vid = info.vid">{{info.name}}({{info.vid}})</li>
+                    </ul>
+                </div>
+            </div>
         </p>
-        <div class="raw-input" v-show="!isOutput">
-            <h2>參照檔</h2>
+        <div class="raw-input" v-show="!dbRawData || editRawData">
+            <hr>
+            <h3>參照檔</h3>
             <textarea v-model="dbRawData"></textarea>
         </div>
         <div class="output-content" v-if="isOutput">
             <hr>
-            file: <strong>{{vid}}.{{settings.main.extension}}</strong>
+            <h2>封裝檔案步驟</h2>
+            <ol>
+                <li>將 *.json 更名為 <code>{{vid}}.{{settings.main.extension}}</code>並將內容更改為以下所述
+                    <textarea v-if="outputContent">{{outputContent}}</textarea>
+                </li>
+                <li>將 *.moc 更名為
+                    <code>{{outputContent.model}}</code>
+                </li>
+                <li>將 *.png 更名為
+                    <code v-for="texture in (outputContent.textures)">{{texture}}</code>
+                </li>
+                <li>將 *.mtn 更名為
+                    <ul>
+                        <li v-for="(tap) in (settings.motions.taps)"><code>{{vid}}_{{tap}}.mtn</code></li>
+                        <li><code>{{vid}}_{{settings.motions.idle}}.mtn</code></li>
+                    </ul>
+                </li>
+                <li>將以下檔案拷貝至目錄中
+                    <ul>
+                        <li v-for="(tap, key) in (outputContent.motions.tap)"><code>{{tap.sound}}</code></li>
+                    </ul>
+                </li>
+                <li>將目錄壓縮為 zip 格式檔案</li>
+            </ol>
             <hr>
-            <textarea v-if="outputContent">{{outputContent}}</textarea>
         </div>
     </div>
 

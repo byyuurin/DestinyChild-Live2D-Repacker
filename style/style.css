@@ -1,11 +1,43 @@
-h1 {
+.fade-enter,
+.fate-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 20px;
+  color: #333333;
+  font-size: 16px;
+}
+
+h1,
+h2 {
   color: #3333cc;
 }
 
-#app input {
-  text-align: center;
-  border: none;
-  margin-left: 1em;
+.dash-line {
+  border-bottom: 1px dashed #666666;
+  margin: 5px auto;
+}
+
+#app {
+  position: relative;
+  margin: 0 auto;
+  max-width: 980px;
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
 }
 
 #app textarea {
@@ -14,43 +46,116 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
+  margin: 10px auto;
   width: 100%;
-  height: 100%;
+  min-height: 200px;
   display: block;
-  min-height: 300px;
-}
-
-#app code:after {
-  content: ', ';
-}
-
-#app code:last-child::after {
-  content: '';
 }
 
 #app code {
-  border: 1px solid #222222 inset;
-  color: #c66;
+  padding: 2px;
+  color: #cc0000;
   font-weight: 800;
   font-size: larger;
+  border-radius: 4px;
 }
 
-#app .vid-matches {
-  max-height: 300px;
+#app ul {
+  margin-top: 0;
   overflow: hidden;
-  overflow-y: scroll;
 }
 
-#app .vid-matches .match {
+#app > .pageHeader {
+  position: relative;
+}
+
+#app > .pageContent {
+  position: relative;
+}
+
+#app > .pageContent .group-content {
+  position: relative;
+}
+
+#app > .pageContent > .input-group {
+  position: relative;
+}
+
+#app > .pageContent > .input-group label {
+  font-size: 1rem;
+  padding: 10px 0;
+  display: inline-block;
+  width: 50%;
+}
+
+#app > .pageContent > .input-group input[type='text'],
+#app > .pageContent > .input-group input[type='number'] {
+  text-align: center;
+  margin-left: 1em;
+  border-width: 1px;
+  border-radius: 4px;
+  width: 100px;
+}
+
+#app > .pageContent > .input-group > .group-content {
+  padding: 10px;
+  border: 1px solid #bcbcbc;
+  border-radius: 4px;
+  font-size: 0;
+}
+
+#app > .pageContent > .input-group .vid-matches {
+  position: relative;
+}
+
+#app > .pageContent > .input-group .vid-matches > ul {
+  font-size: 1rem;
+  margin: 0;
+  margin-top: 1em;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+#app > .pageContent > .input-group .vid-matches > ul li {
+  cursor: pointer;
+  color: #737373;
+}
+
+#app > .pageContent > .input-group .vid-matches > ul li:hover {
+  font-weight: 800;
+  color: #333333;
+}
+
+#app > .pageContent > .input-group .vid-matches > ul li.match {
   color: green;
   font-weight: 800;
+  cursor: default;
 }
 
-#app .output-content > ol > li {
-  padding: 10px 5px;
+#app > .pageContent > .input-group .raw-input {
+  position: relative;
 }
 
-#app .output-content > ol > li > ul,
-#app .output-content > ol > li > textarea {
-  margin-top: 10px;
+#app > .pageContent > .output-group {
+  overflow: hidden;
+  position: relative;
+}
+
+#app > .pageContent > .output-group > .group-content {
+  max-width: 50%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  float: left;
+  font-size: 0;
+}
+
+#app > .pageContent > .output-group > .group-content > textarea {
+  margin: 0;
+  min-height: 600px;
+}
+
+#app > .pageContent > .output-group li {
+  font-size: 0.925rem;
+  line-height: 1.5;
 }

@@ -1,4 +1,4 @@
-# Destiny Child Life2D tool
+# Destiny Child Live2D tool
 
 這是一個 Live2D 轉移輔助工具，用途在簡化重新包裝 Live2D 檔案流程。
 
@@ -6,7 +6,7 @@
 
 ## Android
 
-- [OvOy 互動桌布](https://play.google.com/store/apps/details?id=mobi.ovoy.iwp)
+- [yOvOy 動漫桌布 (動態桌布)](https://play.google.com/store/apps/details?id=mobi.ovoy.iwp)
 
 ## IOS
 

@@ -31,7 +31,7 @@
                         <div class="dash-line"></div>
                         <ul>
                             <li v-for="info in vidInfo" :class="{match:(vidInfo.length===1 && vid === info.vid)}"
-                                @click="vid = info.vid">{{info.name}}({{info.vid}})</li>
+                                @click="vid = info.vid">({{info.vid}}){{info.name}}</li>
                         </ul>
                     </div>
 
@@ -50,6 +50,12 @@
                                 <code>{{vid}}.{{settings.main.extension}}</code>
                                 ，並以左方內容取代
                             </li>
+                            <li>將 <strong>*.{{settings.motions.extension}}</strong> 更名為
+                                <ul>
+                                    <li v-for="(tap) in (settings.motions.taps)"><code>{{vid}}_{{tap}}.{{settings.motions.extension}}</code></li>
+                                    <li><code>{{vid}}_{{settings.motions.idle}}.{{settings.motions.extension}}</code></li>
+                                </ul>
+                            </li>
                             <li>將 <strong>*.{{settings.model.extension}}</strong> 更名為
                                 <ul>
                                     <li><code>{{outputContent.model}}</code></li>
@@ -63,19 +69,18 @@
                                 </ul>
 
                             </li>
-                            <li>將 <strong>*.{{settings.motions.extension}}</strong> 更名為
-                                <ul>
-                                    <li v-for="(tap) in (settings.motions.taps)"><code>{{vid}}_{{tap}}.mtn</code></li>
-                                    <li><code>{{vid}}_{{settings.motions.idle}}.mtn</code></li>
-                                </ul>
-                            </li>
+
                             <li>將以下檔案拷貝至目錄中
                                 <ul>
                                     <li v-for="(tap, key) in (outputContent.motions.tap)"><code>{{tap.sound}}</code></li>
                                 </ul>
                             </li>
                             <li>
-                                將目錄壓縮為<code>zip</code>格式檔案，例：<code>{{vid}}.zip</code>
+                                將目錄壓縮為<code>zip</code>格式檔案，像是
+                                <ul>
+                                    <li><code>{{vid}}.zip</code></li>
+                                    <li><code>({{vidInfo[0].vid}}){{vidInfo[0].name}}.zip</code></li>
+                                </ul>
                             </li>
                         </ol>
                     </div>

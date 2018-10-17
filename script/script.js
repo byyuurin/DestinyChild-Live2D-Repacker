@@ -51,7 +51,7 @@
 
             data.push({
               vid: vid,
-              name: name.replace('_', ' '),
+              name: name.replace('_', ''),
               description: description
             })
           }

@@ -94,7 +94,7 @@ h2 {
   margin-left: 1em;
   border-width: 1px;
   border-radius: 4px;
-  width: 100px;
+  width: 150px;
 }
 
 #app > .pageContent > .input-group > .group-content {
@@ -112,13 +112,13 @@ h2 {
   font-size: 1rem;
   margin: 0;
   margin-top: 1em;
-  max-height: 160px;
+  max-height: 420px;
   overflow-y: auto;
 }
 
 #app > .pageContent > .input-group .vid-matches > ul li {
   cursor: pointer;
-  color: #737373;
+  color: #999999;
 }
 
 #app > .pageContent > .input-group .vid-matches > ul li:hover {

@@ -16,27 +16,35 @@
         </div>
         <div class="pageContent">
             <div class="input-group">
-                <input type="checkbox" id="editRawData" v-model="editRawData">
-                <label for="editRawData">顯示參照檔</label>
-                <div class="raw-input" v-show="!dbRawData || editRawData">
-                    <hr>
-                    <h2>參照檔</h2>
-                    <textarea placeholder="vid   name   description" v-model="dbRawData"></textarea>
+                <div v-show="!isOutput">
+                    <input type="checkbox" id="editRefData" v-model="editRefData">
+                    <label for="editRefData">編輯參照檔</label>
                 </div>
+                <div class="raw-input" v-show="!refPck || !refSoundText || editRefData">
+                    <hr>
+                    <h2>模型參照檔</h2>
+                    <textarea placeholder="vid    name    description" v-model="refPck"></textarea>
+                    <h2>對話參照檔</h2>
+                    <textarea placeholder="sound    text" v-model="refSoundText"></textarea>
+                </div>
+            </div>
+
+            <div class="input-group" v-show="refPck && !editRefData">
                 <h2>必要設定</h2>
                 <div class="group-content">
-                    <label>pck檔名<input type="text" name="vid" maxlength="7" placeholder="c001_01" v-model.trim="vid"></label>
+                    <label>pck檔名<input type="text" name="vid" maxlength="7" placeholder="" v-model.trim="vid"></label>
                     <label>素材圖數量<input type="number" name="textures" maxlength="2" placeholder="*.png 素材圖數量" v-model="textures"></label>
                     <div class="vid-matches" v-show="vidInfo.length > 0">
                         <div class="dash-line"></div>
                         <ul>
                             <li v-for="info in vidInfo" :class="{match:(vidInfo.length===1 && vid === info.vid)}"
-                                @click="vid = info.vid">({{info.vid}}){{info.name}}</li>
+                                @click="vid = info.vid">({{info.vid}}){{info.name | nameFormat}}</li>
                         </ul>
                     </div>
 
                 </div>
             </div>
+
             <transition name="fade" mode="out-in" appear>
                 <div class="output-group" v-if="isOutput">
                     <hr>
@@ -70,17 +78,13 @@
 
                             </li>
 
-                            <li>將以下檔案拷貝至目錄中
+                            <li>將以下檔案拷貝至資料夾中
                                 <ul>
                                     <li v-for="(tap, key) in (outputContent.motions.tap)"><code>{{tap.sound}}</code></li>
                                 </ul>
                             </li>
                             <li>
-                                將目錄壓縮為<code>zip</code>格式檔案，像是
-                                <ul>
-                                    <li><code>{{vid}}.zip</code></li>
-                                    <li><code>({{vidInfo[0].vid}}){{vidInfo[0].name}}.zip</code></li>
-                                </ul>
+                                將資料夾壓縮為<code>zip</code>格式檔案
                             </li>
                         </ol>
                     </div>

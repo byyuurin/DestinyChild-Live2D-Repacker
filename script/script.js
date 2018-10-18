@@ -2,7 +2,7 @@
   let vm = new Vue({
     el: '#app',
     data: {
-      editRawData: false,
+      editRefData: false,
       textures: 1,
       vid: '',
       settings: {
@@ -33,39 +33,32 @@
           hit: ['death_1', 'death_2', 'hit_1', 'hit_2', 'hit_3']
         }
       },
-      dbRawData: ''
+      refPck: '',
+      refSoundText: ''
     },
     computed: {
-      dbRows() {
-        return this.dbRawData.split('\n')
+      pckData() {
+        return this.refPck.split('\n')
       },
-      db() {
-        let data = []
-        this.dbRows.forEach(rowData => {
-          let colData = rowData.split('\t')
-
-          if (colData) {
-            let vid = colData[0] || ''
-            let name = colData[1] || ''
-            let description = colData[2] || ''
-
-            data.push({
-              vid: vid,
-              name: name.replace('_', ''),
-              description: description
-            })
-          }
-        })
-        return data
+      pckList() {
+        return this.parseRefDataList(this.pckData, [
+          'vid',
+          'name',
+          'description'
+        ])
+      },
+      soundTextData() {
+        return this.refSoundText.split('\n')
+      },
+      soundTextMap() {
+        return this.parseRefDataMap(this.soundTextData)
       },
       vidMatches() {
-        return this.db.filter(data => {
+        return this.pckList.filter(data => {
           return data.vid.indexOf(this.vid) >= 0
         })
       },
       vidInfo() {
-        if (!this.vid) return ''
-
         return this.vidMatches.map(data => {
           return { vid: data.vid, name: data.name }
         })
@@ -89,50 +82,47 @@
           },
           physics: ''
         }
+        let fileExtension = ''
 
         // model
-        data.model = `${this.vid}.${this.settings.model.extension}`
+        fileExtension = this.settings.model.extension
+        data.model = `${this.vid}.${fileExtension}`
 
         // textures
+        fileExtension = 'png'
         for (let i = 0; i < this.textures; i++) {
           numberText = this.numberToText(i, 2)
-          data.textures.push(`texture_${numberText}.png`)
+          data.textures.push(`texture_${numberText}.${fileExtension}`)
         }
 
         // motions
-        let motionExtension = this.settings.motions.extension
+        fileExtension = this.settings.motions.extension
 
         // idle motion
-        let idleSubName = this.settings.motions.idle
-        let idleFileName = this.motionFileName(
-          this.vid,
-          idleSubName,
-          motionExtension
-        )
+        let idleName = this.settings.motions.idle
+        let idleFileName = `${this.vid}_${idleName}.${fileExtension}`
         data.motions.idle.push({
           file: idleFileName,
           fade_in: fadeMs,
           fade_out: fadeMs
         })
 
-        // tap motions
+        // tap motion
         let taps = this.settings.motions.taps
-        taps.forEach(tap => {
+        taps.forEach(tapName => {
           let soundExtension = this.settings.sounds.extension
-          let tapSounds = this.settings.sounds[tap]
+          let sounds = this.settings.sounds[tapName]
+          let tapFileName = `${this.vid}_${tapName}.${fileExtension}`
 
-          let tapFileName = this.motionFileName(this.vid, tap, motionExtension)
-
-          tapSounds.forEach(soundName => {
+          sounds.forEach(soundName => {
             let vid = this.vid.replace(/_\w+/, '')
-            let tapSoundName = this.motionFileName(
-              vid,
-              soundName,
-              soundExtension
-            )
+            let tapSoundName = `${vid}_${soundName}`
+            let tapSoundFile = `${tapSoundName}.${soundExtension}`
+
             data.motions.tap.push({
               file: tapFileName,
-              sound: tapSoundName,
+              sound: tapSoundFile,
+              text: this.soundTextMap[tapSoundName],
               fade_in: fadeMs,
               fade_out: fadeMs
             })
@@ -143,13 +133,51 @@
       }
     },
     watch: {
-      dbRawData() {
-        if (typeof Storage !== undefined) {
-          localStorage.setItem('rawData', this.dbRawData)
-        }
+      refPck() {
+        this.saveLocalStorage('refPck', this.refPck)
+      },
+      refSoundText() {
+        this.saveLocalStorage('refSoundText', this.refSoundText)
       }
     },
     methods: {
+      parseRefDataList(refData, columnNames) {
+        let data = []
+
+        refData.forEach(rowData => {
+          let colData = rowData.split('\t')
+
+          if (colData && colData.length === columnNames.length) {
+            let refObj = {}
+
+            for (let i = 0; i < columnNames.length; i++) {
+              refObj[columnNames[i]] = colData[i]
+            }
+
+            data.push(refObj)
+          }
+        })
+
+        return data
+      },
+      parseRefDataMap(refData) {
+        let data = {}
+
+        refData.forEach(rowData => {
+          let colData = rowData.split('\t')
+
+          if (colData && colData.length === 2) {
+            data[colData[0]] = colData[1]
+          }
+        })
+
+        return data
+      },
+      saveLocalStorage(itemKey, data) {
+        if (typeof Storage !== undefined && itemKey && data) {
+          localStorage.setItem(itemKey, data)
+        }
+      },
       numberToText(number, minLength = 1) {
         let text = String(number)
         let textLength = text.length
@@ -163,15 +191,17 @@
         }
 
         return result
-      },
-      motionFileName(name, subName, extension) {
-        return `${name}_${subName}.${extension}`
+      }
+    },
+    filters: {
+      nameFormat(name) {
+        return name.replace('_', '')
       }
     },
     created() {
       if (typeof Storage !== undefined) {
-        rawData = localStorage.getItem('rawData')
-        this.dbRawData = rawData || ''
+        this.refPck = localStorage.getItem('refPck') || ''
+        this.refSoundText = localStorage.getItem('refSoundText') || ''
       }
     }
   })

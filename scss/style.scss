@@ -8,6 +8,7 @@ $danger: #990000;
 $info: #66ca66;
 $baseFontSize: 16px;
 $inputColumns: 3;
+$rwdMinWidth: 800px;
 
 //---------------------------------------------------------------------------
 
@@ -42,6 +43,7 @@ h2 {
   border-bottom: 1px dashed adjust-color($color: $dark, $lightness: 20%);
   margin: 5px auto;
 }
+
 #app {
   position: relative;
   margin: 0 auto;
@@ -89,6 +91,10 @@ h2 {
         padding: 10px 0;
         display: inline-block;
         width: 100% / $inputColumns;
+
+        @media screen and (max-width: $rwdMinWidth) {
+          width: 50%;
+        }
       }
       input[type='text'],
       input[type='number'] {
@@ -143,6 +149,11 @@ h2 {
         overflow: hidden;
         float: left;
         font-size: 0;
+
+        @media screen and (max-width: $rwdMinWidth) {
+          max-width: 100%;
+        }
+
         > textarea {
           margin: 0;
           min-height: 600px;

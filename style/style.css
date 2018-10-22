@@ -88,6 +88,12 @@ h2 {
   width: 33.33333%;
 }
 
+@media screen and (max-width: 800px) {
+  #app > .pageContent > .input-group label {
+    width: 50%;
+  }
+}
+
 #app > .pageContent > .input-group input[type='text'],
 #app > .pageContent > .input-group input[type='number'] {
   text-align: center;
@@ -148,6 +154,12 @@ h2 {
   overflow: hidden;
   float: left;
   font-size: 0;
+}
+
+@media screen and (max-width: 800px) {
+  #app > .pageContent > .output-group > .group-content {
+    max-width: 100%;
+  }
 }
 
 #app > .pageContent > .output-group > .group-content > textarea {

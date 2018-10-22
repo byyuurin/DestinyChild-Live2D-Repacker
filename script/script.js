@@ -1,10 +1,15 @@
 ;(function(Vue) {
+  function pckNameFormat(pckName) {
+    return pckName.replace('_', '')
+  }
+
   let vm = new Vue({
     el: '#app',
     data: {
       editRefData: false,
       textures: 1,
       vid: '',
+      name: '',
       settings: {
         fadeMs: 0,
         main: {
@@ -47,27 +52,50 @@
           'description'
         ])
       },
+      pckListByVid() {
+        if (this.vid) {
+          return this.pckList.filter(item => {
+            let itemVid = item.vid.toLowerCase()
+            let searchVid = this.vid.toLowerCase()
+            return itemVid.indexOf(searchVid) >= 0
+          })
+        } else {
+          return this.pckList
+        }
+      },
+      pckListByName() {
+        if (this.name) {
+          return this.pckListByVid.filter(item => {
+            let itemName = pckNameFormat(item.name).toLowerCase()
+            let searchName = pckNameFormat(this.name).toLowerCase()
+            let vidMatch = item.vid === this.vid
+            return vidMatch || itemName.indexOf(searchName) >= 0
+          })
+        } else {
+          return this.pckListByVid
+        }
+      },
+      pckInfo() {
+        return this.pckListByName.map(data => {
+          return { vid: data.vid, name: data.name }
+        })
+      },
+      pckListLength() {
+        return this.pckInfo.length
+      },
       soundTextData() {
         return this.refSoundText.split('\n')
       },
       soundTextMap() {
         return this.parseRefDataMap(this.soundTextData)
       },
-      vidMatches() {
-        return this.pckList.filter(data => {
-          return data.vid.indexOf(this.vid) >= 0
-        })
-      },
-      vidInfo() {
-        return this.vidMatches.map(data => {
-          return { vid: data.vid, name: data.name }
-        })
-      },
-      isOutput() {
+      isOutputJSON() {
+        let pck = this.pckListByName[0]
         return (
           this.vid &&
-          this.vidMatches.length === 1 &&
-          this.vidMatches[0].vid === this.vid
+          this.pckListLength === 1 &&
+          pck.vid === this.vid &&
+          pckNameFormat(pck.name) === this.name
         )
       },
       outputContent() {
@@ -191,11 +219,15 @@
         }
 
         return result
+      },
+      findPck(info) {
+        if (info.vid) this.vid = info.vid
+        if (info.name) this.name = pckNameFormat(info.name)
       }
     },
     filters: {
       nameFormat(name) {
-        return name.replace('_', '')
+        return pckNameFormat(name)
       }
     },
     created() {

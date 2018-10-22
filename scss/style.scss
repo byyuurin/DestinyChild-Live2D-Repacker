@@ -7,6 +7,7 @@ $warning: orange;
 $danger: #990000;
 $info: #66ca66;
 $baseFontSize: 16px;
+$inputColumns: 3;
 
 //---------------------------------------------------------------------------
 
@@ -87,7 +88,7 @@ h2 {
         font-size: 1rem;
         padding: 10px 0;
         display: inline-block;
-        width: 50%;
+        width: 100% / $inputColumns;
       }
       input[type='text'],
       input[type='number'] {
@@ -103,7 +104,7 @@ h2 {
         border-radius: 4px;
         font-size: 0;
       }
-      .vid-matches {
+      .pck-matches {
         position: relative;
         > ul {
           font-size: 1rem;

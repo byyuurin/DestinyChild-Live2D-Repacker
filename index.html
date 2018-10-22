@@ -136,6 +136,12 @@
                             </li>
 
                             <li>將以下檔案拷貝至資料夾中
+                                <input
+                                    type="checkbox"
+                                    id="isGeneralSound"
+                                    v-model="isGeneralSound"
+                                >
+                                <label for="isGeneralSound">通用語音檔</label>
                                 <ul>
                                     <li v-for="(tap, key) in (outputContent.motions.tap)"><code>{{tap.sound}}</code></li>
                                 </ul>

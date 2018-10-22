@@ -8,6 +8,7 @@
     data: {
       editRefData: false,
       textures: 1,
+      isGeneralSound: true,
       vid: '',
       name: '',
       settings: {
@@ -143,7 +144,10 @@
           let tapFileName = `${this.vid}_${tapName}.${fileExtension}`
 
           sounds.forEach(soundName => {
-            let vid = this.vid.replace(/_\w+/, '')
+            let vid = this.vid
+            if (this.isGeneralSound) {
+              vid = vid.replace(/_\w+/, '')
+            }
             let tapSoundName = `${vid}_${soundName}`
             let tapSoundFile = `${tapSoundName}.${soundExtension}`
 

@@ -30,13 +30,10 @@
 
 ## 角色 Live2D 名稱參照檔
 
-> 檔名並不固定，請先利用 **PckTool** 拆包後確認內容
->
-> 模型參照格式請參考本專案提供的 `name_list.txt`
->
-> 對話參照格式請參考本專案提供的 `sound_text_list.txt`
-
 - `com.stairs.destinychild/locale.pck`
+- 檔名並不固定，請先利用 **PckTool** 拆包後確認內容
+- 模型參照檔格式請參考本專案提供的 `name_list.txt`
+- 對話參照檔格式請參考本專案提供的 `sound_text_list.txt`
 
 ## 角色 Live2D 模組檔
 

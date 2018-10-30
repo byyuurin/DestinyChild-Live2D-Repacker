@@ -63,6 +63,7 @@
                             maxlength="7"
                             placeholder=""
                             v-model.trim="vid"
+                            @keyup="name = ''"
                         ></label>
                     <label>角色名<input
                             type="text"
@@ -70,6 +71,7 @@
                             maxlength="10"
                             placeholder=""
                             v-model.trim="name"
+                            @keyup="vid=''"
                         ></label>
                     <label>素材圖數量<input
                             type="number"

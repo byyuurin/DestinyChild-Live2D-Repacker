@@ -1,6 +1,8 @@
-# Destiny Child Live2D tool
+# Destiny Child Live2D-Repacker
 
 這是一個 Live2D 轉移輔助工具，用途在簡化重新包裝 Live2D 檔案流程。
+
+- [前往頁面](https://byyuurin.github.io/DestinyChild-Live2D-Repacker/)
 
 # 已知可讀取 Live2D 的軟體或 APP
 
